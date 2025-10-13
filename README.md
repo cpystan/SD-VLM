@@ -83,7 +83,7 @@ SD-VLM inherits the instruction-tuning pipeline of LLaVA, based on the well-esta
 sh scripts/v1_5/finetune_task_lora.sh
 ```
 
-1. Non-LoRA Finetuning 
+2. Non-LoRA Finetuning 
 ```Shell
 sh scripts/v1_5/finetune_task.sh
 ```
@@ -96,9 +96,22 @@ Some arguments in the script need to be modified:
 - `--depth_path`: path to depth_anything_v2_vitl
 
 
+## Evaluation on MSMU-Bench
 
+Step 1: Load the checkpoint and conduct inference on MSMU-Bench.
+```Shell
+python evaluation/inference.py --model_path 'SD-VLM-7B' --data 'MSMU' --vision_tower 'clip-vit-large-patch14-336'
+```
 
+Step 2: Load the json file saved from step 1 and use GPT-4-Turbo to get the evaluation response.
+```Shell
+python evaluation/llm_generate.py --path './preds.json' --key 'gpt_key'
+```
 
+Step 3: Load the json file saved from step 2 and calculate the final result.
+```Shell
+python evaluation/evaluate_final.py --path './preds_gpt.json' 
+```
 ## 🚧 Status: Coming Soon
 More details are coming soon.
 
