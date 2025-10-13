@@ -115,3 +115,14 @@ python evaluation/evaluate_final.py --path './preds_gpt.json'
 ## 🚧 Status: Coming Soon
 More details are coming soon.
 
+## Citation
+If you find SD-VLM useful for your research and applications, please cite using this BibTeX:
+
+```Shell
+@misc{chen2025sdvlm,
+      title={SD-VLM: Spatial Measuring and Understanding with Depth-Encoded Vision-Language Models}, 
+      author={Pingyi Chen and Yujing Lou and Shen Cao and Jinhui Guo and Lubin Fan and Yue Wu and Lin Yang and Lizhuang Ma and Jieping Ye},
+      year={2025},
+      url={https://arxiv.org/abs/2509.17664}, 
+}
+```
