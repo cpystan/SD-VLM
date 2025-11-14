@@ -84,12 +84,7 @@ def eval_llava(args):
     model.use_depth = eval(args.use_depth)
     print(f'use gt depth: {model.gt_depth}')
 
-    data = pd.read_parquet(
-        data_path,
-        columns=[            'image_base64', 'image_size', 
-            'image_mode', 
-            'conversations','type']
-    )
+    data = load_dataset(data_path,download_mode="reuse_dataset_if_exists")['test']
 
     
 
@@ -98,10 +93,10 @@ def eval_llava(args):
     count = 0
 
     for i in tqdm(range(len(data[:]))):
-        sample = data.iloc[i]
+        sample = data[i]
         count+=1
         prompt = sample['conversations'][0]['value']
-        image = base64_to_pil(sample['image_base64'])
+        image = sample['image']
 
         input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, return_tensors='pt').unsqueeze(0).cuda()
 

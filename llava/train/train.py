@@ -23,7 +23,7 @@ import pathlib
 from typing import Dict, Optional, Sequence, List
 import base64
 import torch
-
+from datasets import load_dataset
 import transformers
 import tokenizers
 
@@ -672,13 +672,7 @@ class LazySupervisedDataset(Dataset):
                  data_args: DataArguments):
         super(LazySupervisedDataset, self).__init__()
 
-        list_data_dict = pd.read_parquet(
-        data_path,
-        columns=[            'image_base64', 'image_size', 
-            'image_mode', 
-            'conversations']
-    )
-
+        list_data_dict = load_dataset(data_path,download_mode="reuse_dataset_if_exists")['train']
         rank0_print("Formatting inputs...Skip in lazy mode")
         self.tokenizer = tokenizer
         self.list_data_dict = list_data_dict
@@ -723,16 +717,16 @@ class LazySupervisedDataset(Dataset):
 
     def __getitem__(self, i) -> Dict[str, torch.Tensor]:
 
-        sources = self.list_data_dict.iloc[i]
+        sources = self.list_data_dict[i]
         if isinstance(i, int):
             sources = [sources]
         assert len(sources) == 1, "Don't know why it is wrapped to a list"  # FIXME
 
-        if   ('image_base64' in sources[0].keys()):  # MSMU dataset
+        if   ('image' in sources[0].keys()):  # MSMU dataset
 
             processor = self.data_args.image_processor
             
-            image = self.base64_to_pil(sources[0]['image_base64'])
+            image = sources[0]['image']
 
             ori_img = copy.deepcopy(image)
             
@@ -816,7 +810,7 @@ class LazySupervisedDataset(Dataset):
 
 
         # image exist in the data
-        if 'image' in self.list_data_dict.iloc[i]:
+        if 'image' in self.list_data_dict[i]:
             data_dict['image'] = image
             data_dict['ori_img'] = ori_img
         elif 'SpatialRGPT' in self.data_args.data_path:
