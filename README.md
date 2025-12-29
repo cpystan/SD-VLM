@@ -112,8 +112,6 @@ Step 3: Load the json file saved from step 2 and calculate the final result.
 ```Shell
 python evaluation/evaluate_final.py --path './preds_gpt.json' 
 ```
-## 🚧 Status: Coming Soon
-More details are coming soon.
 
 ## Citation
 If you find SD-VLM useful for your research and applications, please cite using this BibTeX:
