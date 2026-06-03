@@ -184,8 +184,8 @@ Response: {pred}
 
 
 def main(args):
-    quantitative_types = ['scale_estimation','absolute_distance','count','position','refer_obj_estimation','refer_obj_estimation','refer_obj_estimation']
-    qualitative_types = ['relative_position','scale_compare','scale_compare','zero']
+    quantitative_types = ['scale_estimation','absolute_distance','count','grounding','refer_obj_estimation']
+    qualitative_types = ['relative_position','scale_compare','existence']
 
     #gpt = args.gpt
     openai.api_key = args.key
@@ -210,7 +210,7 @@ def main(args):
         middle=[]
         middle.append(lines[0])
         count=0
-        for line in tqdm(lines[1:100]):
+        for line in tqdm(lines[:):
             count+=1
 
             match_success = False
