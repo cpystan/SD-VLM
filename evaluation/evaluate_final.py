@@ -166,8 +166,8 @@ def compute_errors(gt, pred):
 
 def main(args):
 
-    quantitative_types = ['scale_estimation','absolute_distance','count','position','refer_obj_estimation','refer_obj_estimation','refer_obj_estimation']
-    qualitative_types = ['relative_position','scale_compare','scale_compare','zero']
+    quantitative_types = ['scale_estimation','absolute_distance','count','grounding','refer_obj_estimation']
+    qualitative_types = ['relative_position','scale_compare','existence']
 
 
 
