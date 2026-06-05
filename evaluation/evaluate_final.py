@@ -202,7 +202,7 @@ def main(args):
         if data["type"] in quantitative_types:
 
 
-                if data["type"]  == "position":
+                if data["type"]  == "grounding":
 
                     try:
                         llama_evaluation = eval(data['answer'])
